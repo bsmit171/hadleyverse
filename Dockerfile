@@ -1,6 +1,8 @@
 FROM rocker/rstudio
 MAINTAINER "Carl Boettiger and Dirk Eddelbuettel" rocker-maintainers@eddelbuettel.com
 
+RUN apt-get update && apt-get -y install -t unstable --no-install-recommends libgdal-dev
+
 ## LaTeX:
 ## This installs inconsolata fonts used in R vignettes/manuals manually since texlive-fonts-extra is HUGE
 
@@ -27,7 +29,6 @@ RUN apt-get update \
 
 ## Install some external dependencies. 
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends libgdal-dev \
   && apt-get install -y --no-install-recommends -t unstable \
     default-jdk \
     default-jre \
@@ -36,9 +37,9 @@ RUN apt-get update \
     libatlas-base-dev \
     libcairo2-dev \
     libhunspell-dev \
-    libgsl-dev \
-    libgeos-dev \
     libgeos-c1v5 \
+    libgeos-dev \
+    libgsl-dev \
     librdf0-dev \
     libssl-dev \
     libmysqlclient-dev \
