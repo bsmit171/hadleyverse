@@ -27,6 +27,7 @@ RUN apt-get update \
 
 ## Install some external dependencies. 
 RUN apt-get update \
+  && apt-get install -y --no-install-recommends libgdal-dev \
   && apt-get install -y --no-install-recommends -t unstable \
     default-jdk \
     default-jre \
@@ -36,7 +37,6 @@ RUN apt-get update \
     libcairo2-dev \
     libhunspell-dev \
     libgsl-dev \
-    libgdal-dev \
     libgeos-dev \
     libgeos-c1v5 \
     librdf0-dev \
