@@ -1,11 +1,13 @@
 FROM rocker/rstudio:testing
 MAINTAINER "Carl Boettiger and Dirk Eddelbuettel" rocker-maintainers@eddelbuettel.com
 
+RUN apt-get update && apt-get -y install  --no-install-recommends libgdal-dev
+
 ## LaTeX:
 ## This installs inconsolata fonts used in R vignettes/manuals manually since texlive-fonts-extra is HUGE
 
 RUN apt-get update \
-  && apt-get install -t unstable -y --no-install-recommends \
+  && apt-get install  -y --no-install-recommends \
     aspell \
     aspell-en \
     ghostscript \
@@ -27,7 +29,8 @@ RUN apt-get update \
 
 ## Install some external dependencies. 
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends -t unstable \
+  && apt-get install -y --no-install-recommends libssl-dev \
+  && apt-get install -y --no-install-recommends  \
     default-jdk \
     default-jre \
     gdal-bin \
@@ -35,12 +38,10 @@ RUN apt-get update \
     libatlas-base-dev \
     libcairo2-dev \
     libhunspell-dev \
-    libgsl-dev \
-    libgdal-dev \
-    libgeos-dev \
     libgeos-c1v5 \
+    libgeos-dev \
+    libgsl-dev \
     librdf0-dev \
-    libssl-dev \
     libmysqlclient-dev \
     libpq-dev \
     libsqlite3-dev \
@@ -62,94 +63,13 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/ \
   && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 
-## Install the Hadleyverse packages (and some close friends). 
-RUN install2.r --error \
-    broom \
-    DiagrammeR \
-    devtools \
-    dplyr \
-    ggplot2 \
-    ggthemes \
-    haven \
-    httr \
-    knitr \
-    lubridate \
-    packrat \
-    pryr \
-    purrr \
-    reshape2 \
-    readr \
-    readxl \
-    revealjs \
-    rmarkdown \
-    rmdformats \
-    rstudioapi \
-    rticles \
-    rvest \
-    rversions \
-    testthat \
-    tidyr \
-    tidyverse \
-    servr \
-    shiny \
-    stringr \
-    svglite \
-    tibble \
-    tufte \
-    xml2 
 RUN install2.r -r "http://packages.ropensci.org" git2r
-## Manually install (useful packages from) the SUGGESTS list of the above packages.
-## (because --deps TRUE can fail when packages are added/removed from CRAN)
-RUN install2.r --error \
-    -r "https://cran.rstudio.com" \
-    -r "http://www.bioconductor.org/packages/release/bioc" \
-    base64enc \
-    BiocInstaller \
-    bitops \
-    crayon \
-    codetools \
-    covr \
-    data.table \
-    downloader \
-    evaluate \
-    git2r \
-    gridExtra \
-    gmailr \
-    gtable \
-    hexbin \
-    Hmisc \
-    htmlwidgets \
-    hunspell \
-    jpeg \
-    Lahman \
-    lattice \
-    lintr \
-    MASS \
-    openxlsx \
-    PKI \
-    png \
-    microbenchmark \
-    mgcv \
-    mapproj \
-    maps \
-    maptools \
-    mgcv \
-    multcomp \
-    nlme \
-    nycflights13 \
-    quantreg \
-    Rcpp \
-    rJava \
-    roxygen2 \
-    RMySQL \
-    RPostgreSQL \
-    RSQLite \
-    testit \
-    V8 \
-    withr \
-    XML \
-  && r -e 'source("https://raw.githubusercontent.com/MangoTheCat/remotes/master/install-github.R")$value("mangothecat/remotes")' \
-  && r -e 'remotes::install_github("wesm/feather/R")' \
+## Install the tidyverse package, RStudio pkg dev (and some close friends). 
+RUN install2.r \
+  --error --deps "TRUE" \
+  -r "http://www.bioconductor.org/packages/release/bioc" \
+  -r "https://cran.rstudio.com" \
+  tidyverse devtools profvis rticles bookdown rmdshower \
   && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 
 
