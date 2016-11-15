@@ -59,16 +59,9 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/ \
   && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 
-RUN install2.r -r "http://packages.ropensci.org" git2r
 ## Install the tidyverse package, RStudio pkg dev (and some close friends). 
-RUN install2.r \
-  --error --deps "TRUE" \
-  -r "http://www.bioconductor.org/packages/release/bioc" \
-  -r "https://cran.rstudio.com" \
-  tidyverse devtools profvis rticles bookdown rmdshower \
+RUN Rscript -e "install.packages(c('tidyverse', 'devtools', 'profvis', 'rticles', 'bookdown', 'rmdshower'), repos = c('http://www.bioconductor.org/packages/release/bioc', 'https://cran.rstudio.com'), dep = TRUE)" \
   && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
-
-
 
 ## httr authentication uses this port
 EXPOSE 1410
