@@ -1,4 +1,4 @@
-FROM rocker/rstudio
+FROM rocker/rstudio:testing
 MAINTAINER "Carl Boettiger and Dirk Eddelbuettel" rocker-maintainers@eddelbuettel.com
 
 ## LaTeX:
@@ -97,7 +97,7 @@ RUN install2.r --error \
     tibble \
     tufte \
     xml2 
-
+RUN install2.r -r "http://packages.ropensci.org" git2r
 ## Manually install (useful packages from) the SUGGESTS list of the above packages.
 ## (because --deps TRUE can fail when packages are added/removed from CRAN)
 RUN install2.r --error \
