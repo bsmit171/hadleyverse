@@ -1,9 +1,5 @@
-FROM rocker/rstudio:testing
+FROM rocker/rstudio
 MAINTAINER "Carl Boettiger and Dirk Eddelbuettel" rocker-maintainers@eddelbuettel.com
-
-## temporary fix to deal with things moving around on unstable
-RUN apt-get update && apt-get -y install  --no-install-recommends -t unstable libgdal-dev libpq-dev libspatialite-dev libsqlite3-dev
-
 
 ## LaTeX:
 ## This installs inconsolata fonts used in R vignettes/manuals manually since texlive-fonts-extra is HUGE
@@ -31,7 +27,6 @@ RUN apt-get update \
 
 ## Install some external dependencies. 
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends -t unstable librdf0-dev \
   && apt-get install -y --no-install-recommends  \
     default-jdk \
     default-jre \
@@ -40,13 +35,11 @@ RUN apt-get update \
     libatlas-base-dev \
     libcairo2-dev \
     libhunspell-dev \
-    libgeos-c1v5 \
     libgeos-dev \
-    libgsl-dev \
+    libgsl0-dev \
     librdf0-dev \
     libmysqlclient-dev \
     libpq-dev \
-    libssl-dev \
     libsqlite3-dev \
     librsvg2-dev \
     libv8-dev \
