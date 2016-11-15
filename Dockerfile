@@ -1,7 +1,9 @@
 FROM rocker/rstudio:testing
 MAINTAINER "Carl Boettiger and Dirk Eddelbuettel" rocker-maintainers@eddelbuettel.com
 
-RUN apt-get update && apt-get -y install  --no-install-recommends libgdal-dev
+## temporary fix to deal with things moving around on unstable
+RUN apt-get update && apt-get -y install  --no-install-recommends -t unstable libgdal-dev libpq-dev libspatialite-dev libsqlite3-dev
+
 
 ## LaTeX:
 ## This installs inconsolata fonts used in R vignettes/manuals manually since texlive-fonts-extra is HUGE
