@@ -27,7 +27,6 @@ RUN apt-get update \
     mdbtools \
     netcdf-bin \
     qpdf \
-    r-cran-rgl \
     ssh \
     vim \
   && R CMD javareconf \
