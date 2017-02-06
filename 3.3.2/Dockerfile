@@ -1,4 +1,4 @@
-FROM rocker/verse
+FROM rocker/verse:3.3.2
 MAINTAINER "Carl Boettiger and Dirk Eddelbuettel" rocker-maintainers@eddelbuettel.com
 
 ## Install some external dependencies. 
